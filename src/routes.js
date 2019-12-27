@@ -1,16 +1,13 @@
 import { Router } from 'express';
 
-import UserController from './app/controllers/UserController';
-import SessionController from './app/controllers/SessionController';
-
-import authMiddleware from './app/middlewares/auth';
+import PlansController from './app/controllers/PlansController';
+import PricesController from './app/controllers/PricesController';
+import CallsController from './app/controllers/CallsController';
 
 const routes = new Router();
 
-routes.post('/users', UserController.store);
-routes.post('/sessions', SessionController.store);
-
-routes.use(authMiddleware);
-routes.put('/users', UserController.update);
+routes.post('/plans', PlansController.store);
+routes.post('/prices', PricesController.store);
+routes.post('/calls', CallsController.store);
 
 export default routes;
