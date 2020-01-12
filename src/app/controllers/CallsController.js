@@ -16,22 +16,24 @@ class CallsController {
       return res.status(400).json({ error: 'DDD is not available' });
     }
 
-    if (plan && duration > plan.duration) {
-      const durationExcess = duration - plan.duration;
-      const calcPrice = checkPrice.price + checkPrice.price * 0.1;
-      const price = durationExcess * calcPrice;
-      const normalPrice = duration * checkPrice.price;
-
-      const call = await Call.create({
-        plan_id,
-        source,
-        duration,
-        destination,
-        normal_price: normalPrice,
-        price,
-      });
-      return res.json(call);
+    if (!plan && !duration) {
+      return res.status(400).json({ error: 'invalid plan and duration' });
     }
+
+    const durationExcess = duration - plan.duration;
+    const calcPrice = checkPrice.price + checkPrice.price * 0.1;
+    const price = durationExcess * calcPrice;
+    const normalPrice = duration * checkPrice.price;
+
+    const call = await Call.create({
+      plan_id,
+      source,
+      duration,
+      destination,
+      normal_price: normalPrice,
+      price,
+    });
+    return res.json(call);
   }
 }
 
